@@ -11,10 +11,10 @@ import DataMapper from '../DataMapper';
 import KeyProviderContext from '../KeyProvider/KeyProviderContext';
 import SelectTypeStyle from './SelectTypeStyle';
 
-const SelectTypeTransport = () => {
+const SelectTypeTransport = ({selectType}: any) => {
   const {keyApi} = useContext(KeyProviderContext);
   const [openTypeTransport, setOpenTypeTransport] = useState(false);
-  const [valueTypeTransport, setValueTypeTransport] = useState(null);
+  const [valueTypeTransport, setValueTypeTransport] = useState('0');
   const [itemsTypeTransport, setItemsTypeTransport] = useState<
     Array<ItemType<ValueType>>
   >([{label: '', value: '0'}]);
@@ -26,6 +26,10 @@ const SelectTypeTransport = () => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    selectType(valueTypeTransport);
+  }, [valueTypeTransport]);
 
   return (
     <View style={SelectTypeStyle.dropDownList}>
