@@ -11,52 +11,56 @@ import KeyProviderContext from '../KeyProvider/KeyProviderContext';
 import AppTabsContext from '../navigation/AppTabs/AppTabsContext';
 import SelectTypeStyle from './SelectStyle';
 
-const SelectMark = ({selectMark}: any) => {
+const SelectModel = ({selectModel}: any) => {
   const {keyApi} = useContext(KeyProviderContext);
-  const {selectedTypeTransport} = useContext(AppTabsContext);
-  const [openMarkTransport, setOpenMarkTransport] = useState(false);
-  const [valueMarkTransport, setValueMarkTransport] = useState('');
-  const [itemsMarkTransport, setItemsMarkTransport] = useState<
+  const {selectedTypeTransport, selectedMark} = useContext(AppTabsContext);
+  const [openModelTransport, setOpenModelTransport] = useState(false);
+  const [valueModelTransport, setValueModelTransport] = useState('');
+  const [itemsModelTransport, setItemsModelTransport] = useState<
     Array<ItemType<ValueType>>
   >([{label: '', value: '0'}]);
 
   useEffect(() => {
-    if (selectedTypeTransport !== '0') {
+    if (selectedTypeTransport !== '0' && selectedMark !== '0') {
       APIService.get(
-        APIRoutes.getMarkTransport(selectedTypeTransport, keyApi),
+        APIRoutes.getModelTransport(
+          selectedTypeTransport,
+          selectedMark,
+          keyApi,
+        ),
       ).then(result => {
         if (result) {
-          setItemsMarkTransport(
+          setItemsModelTransport(
             DataMapper(result.data) as ItemType<ValueType>[],
           );
         }
       });
-      setValueMarkTransport('0');
+      setValueModelTransport('0');
     }
-  }, [selectedTypeTransport]);
+  }, [selectedTypeTransport, selectedMark]);
 
   useEffect(() => {
-    if (selectedTypeTransport !== '0') {
-      selectMark(valueMarkTransport);
+    if (selectedTypeTransport !== '0' && selectedMark !== '0') {
+      selectModel(valueModelTransport);
     }
-  }, [valueMarkTransport]);
+  }, [valueModelTransport]);
 
   return (
     <View style={SelectTypeStyle.dropDownList}>
       <Image
-        source={require('../../images/markTransport.png')}
+        source={require('../../images/modelTransport.png')}
         style={SelectTypeStyle.imageIcon}
       />
       <DropDownPicker
-        open={openMarkTransport}
-        value={valueMarkTransport}
-        items={itemsMarkTransport}
-        setOpen={setOpenMarkTransport}
-        setValue={setValueMarkTransport}
+        open={openModelTransport}
+        value={valueModelTransport}
+        items={itemsModelTransport}
+        setOpen={setOpenModelTransport}
+        setValue={setValueModelTransport}
         dropDownDirection="TOP"
       />
     </View>
   );
 };
 
-export default SelectMark;
+export default SelectModel;

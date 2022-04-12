@@ -9,7 +9,7 @@ import APIService from '../../../android/api-service/APIService';
 import DataDropDownList from '../../../android/models/DTO/DataDropDownList';
 import DataMapper from '../DataMapper';
 import KeyProviderContext from '../KeyProvider/KeyProviderContext';
-import SelectTypeStyle from './SelectTypeStyle';
+import SelectTypeStyle from './SelectStyle';
 
 const SelectTypeTransport = ({selectType}: any) => {
   const {keyApi} = useContext(KeyProviderContext);
