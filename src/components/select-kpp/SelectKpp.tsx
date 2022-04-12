@@ -46,6 +46,8 @@ const Kpp = ({selectKpp}: any) => {
         style={SelectTypeStyle.imageIcon}
       />
       <DropDownPicker
+        listMode="SCROLLVIEW"
+        scrollViewProps={{nestedScrollEnabled: true}}
         open={openKpp}
         value={valueKpp}
         items={itemsKpp}

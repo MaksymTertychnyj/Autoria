@@ -38,6 +38,8 @@ const SelectYears = ({selectMinYear, selectMaxYear}: any) => {
       />
       <View style={{width: 100, marginLeft: 20}}>
         <DropDownPicker
+          listMode="SCROLLVIEW"
+          scrollViewProps={{nestedScrollEnabled: true}}
           open={openMinYear}
           value={valueMinYear}
           items={itemsMinYear}
@@ -48,6 +50,8 @@ const SelectYears = ({selectMinYear, selectMaxYear}: any) => {
       </View>
       <View style={{width: 100, marginLeft: 30}}>
         <DropDownPicker
+          listMode="SCROLLVIEW"
+          scrollViewProps={{nestedScrollEnabled: true}}
           open={openMaxYear}
           value={valueMaxYear}
           items={itemsMaxYear}

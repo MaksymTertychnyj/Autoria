@@ -38,6 +38,8 @@ const SelectRegion = ({selectRegion}: any) => {
         style={SelectTypeStyle.imageIcon}
       />
       <DropDownPicker
+        listMode="SCROLLVIEW"
+        scrollViewProps={{nestedScrollEnabled: true}}
         open={openRegion}
         value={valueRegion}
         items={itemsRegion}

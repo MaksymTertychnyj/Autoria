@@ -30,6 +30,8 @@ const CarMileage = ({selectMileage}: any) => {
         style={SelectTypeStyle.imageIcon}
       />
       <DropDownPicker
+        listMode="SCROLLVIEW"
+        scrollViewProps={{nestedScrollEnabled: true}}
         open={openCarMileage}
         value={valueCarMileage}
         items={itemsCarMileage}

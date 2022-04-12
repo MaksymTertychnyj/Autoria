@@ -46,6 +46,8 @@ const City = ({selectCity}: any) => {
         style={SelectTypeStyle.imageIcon}
       />
       <DropDownPicker
+        listMode="SCROLLVIEW"
+        scrollViewProps={{nestedScrollEnabled: true}}
         open={openCity}
         value={valueCity}
         items={itemsCity}

@@ -38,6 +38,8 @@ const Fuel = ({selectFuel}: any) => {
         style={SelectTypeStyle.imageIcon}
       />
       <DropDownPicker
+        listMode="SCROLLVIEW"
+        scrollViewProps={{nestedScrollEnabled: true}}
         open={openFuel}
         value={valueFuel}
         items={itemsFuel}

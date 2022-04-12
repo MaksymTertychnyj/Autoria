@@ -52,6 +52,8 @@ const SelectModel = ({selectModel}: any) => {
         style={SelectTypeStyle.imageIcon}
       />
       <DropDownPicker
+        listMode="SCROLLVIEW"
+        scrollViewProps={{nestedScrollEnabled: true}}
         open={openModelTransport}
         value={valueModelTransport}
         items={itemsModelTransport}

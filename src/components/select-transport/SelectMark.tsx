@@ -48,6 +48,8 @@ const SelectMark = ({selectMark}: any) => {
         style={SelectTypeStyle.imageIcon}
       />
       <DropDownPicker
+        listMode="SCROLLVIEW"
+        scrollViewProps={{nestedScrollEnabled: true}}
         open={openMarkTransport}
         value={valueMarkTransport}
         items={itemsMarkTransport}

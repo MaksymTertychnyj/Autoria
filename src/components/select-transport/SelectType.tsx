@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Image, View} from 'react-native';
+import {Image, SafeAreaView, View} from 'react-native';
 import DropDownPicker, {
   ItemType,
   ValueType,
@@ -38,6 +38,8 @@ const SelectTypeTransport = ({selectType}: any) => {
         style={SelectTypeStyle.imageIcon}
       />
       <DropDownPicker
+        listMode="SCROLLVIEW"
+        scrollViewProps={{nestedScrollEnabled: true}}
         open={openTypeTransport}
         value={valueTypeTransport}
         items={itemsTypeTransport}
