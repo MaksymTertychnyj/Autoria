@@ -8,33 +8,19 @@ import AppTabs from './AppTabs/AppTabs';
 const Stack = createStackNavigator();
 
 const Routes = () => {
-  const {keyApi} = useContext(KeyProviderContext);
-
-  const navigator =
-    keyApi === '' ? (
-      <Stack.Screen
-        name="EnterKeyPage"
-        component={EnterKeyPage}
-        options={{
-          headerShown: false,
-        }}
-      />
-    ) : null;
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {navigator}
         <Stack.Screen
-          name="AppTabs"
-          component={AppTabs}
+          name="EnterKeyPage"
+          component={EnterKeyPage}
           options={{
             headerShown: false,
           }}
         />
         <Stack.Screen
-          name="EnterKeyPage"
-          component={EnterKeyPage}
+          name="AppTabs"
+          component={AppTabs}
           options={{
             headerShown: false,
           }}

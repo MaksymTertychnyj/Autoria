@@ -10,6 +10,12 @@ const EnterKeyPage = ({navigation}: any) => {
   const [colorButtonOk, setColorButtonOk] = useState('#f3b2cc');
   const url = 'https://api.ria.com/account/api';
 
+  useEffect(() => {
+    if (keyApi !== '') {
+      navigation.navigate('AppTabs');
+    }
+  }, [keyApi]);
+
   const openUrl = () => {
     Linking.openURL(url).catch(err => console.error("Couldn't load page", err));
   };
