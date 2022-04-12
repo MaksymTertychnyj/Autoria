@@ -22,7 +22,7 @@ const AppTabsStyle = StyleSheet.create({
     paddingTop: 30,
     alignSelf: 'center',
   },
-  buttonChangeKey: {
+  buttonCalculate: {
     width: 100,
     height: 40,
     alignSelf: 'center',
@@ -38,6 +38,11 @@ const AppTabsStyle = StyleSheet.create({
     color: 'white',
     fontFamily: Font.Milliard.Milliard,
     paddingTop: 8,
+  },
+  buttonChangeKey: {
+    marginTop: 30,
+    alignSelf: 'flex-end',
+    marginRight: 30,
   },
 });
 

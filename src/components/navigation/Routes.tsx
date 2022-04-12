@@ -32,6 +32,13 @@ const Routes = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="EnterKeyPage"
+          component={EnterKeyPage}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
