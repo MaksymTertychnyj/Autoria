@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Button, Image, Linking, Text, View} from 'react-native';
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
-import KeyProviderContext from '../KeyProvider/KeyProviderContext';
+import KeyProviderContext from '../../KeyProvider/KeyProviderContext';
 import EnterKeyStyles from './EnterKeyStyles';
 
 const EnterKeyPage = ({navigation}: any) => {
@@ -32,7 +32,7 @@ const EnterKeyPage = ({navigation}: any) => {
         <Text style={EnterKeyStyles.text}>WELCOME</Text>
         <Text style={EnterKeyStyles.text}>TO</Text>
         <Image
-          source={require('../../images/logo_ria.png')}
+          source={require('../../../images/logo_ria.png')}
           resizeMode="contain"
           style={EnterKeyStyles.image}
         />
