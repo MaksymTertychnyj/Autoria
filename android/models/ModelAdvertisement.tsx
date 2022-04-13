@@ -1,5 +1,5 @@
 type ModelAdvertisement = null | {
-  response: Map<string, string>;
+  stateData: Map<string, string>;
   photoData: Map<string, string>;
   autoData: Map<string, string>;
 };
