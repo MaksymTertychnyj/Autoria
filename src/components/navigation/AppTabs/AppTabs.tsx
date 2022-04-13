@@ -18,7 +18,6 @@ import AppTabsContext from './AppTabsContext';
 import AppTabsStyle from './AppTabsStyle';
 
 const AppTabs = ({navigation}: any) => {
-  const {keyApi} = useContext(KeyProviderContext);
   const [colorButtonOk, setColorButtonOk] = useState('#f3b2cc');
 
   const [selectedTypeTransport, setSelectedTypeTransport] = useState('0');
@@ -31,12 +30,42 @@ const AppTabs = ({navigation}: any) => {
   const [selectedMinYear, setSelectedMinYear] = useState('');
   const [selectedMaxYear, setSelectedMaxYear] = useState('');
   const [selectedCarMileage, setSelectedCarMileage] = useState('');
+  let sublink: string;
 
   useEffect(() => {
     selectedModel !== '0'
       ? setColorButtonOk('#D80056')
       : setColorButtonOk('#f3b2cc');
   }, [selectedModel]);
+
+  const AveragePrice = () => {
+    sublink = '';
+    sublink += '&marka_id=' + selectedMark + '&model_id=' + selectedModel;
+
+    if (selectedMinYear !== '1980') {
+      sublink += '& yers=' + selectedMinYear;
+    }
+    if (selectedMaxYear !== '1980') {
+      sublink += '& yers=' + selectedMaxYear;
+    }
+    if (selectedFuel !== '0') {
+      sublink += '&fuel_id=' + selectedFuel;
+    }
+    if (selectedKPP !== '0') {
+      sublink += '&gear_id=' + selectedKPP;
+    }
+    if (selectedRegion !== '0') {
+      sublink += '&region_id=' + selectedRegion;
+    }
+    if (selectedCity !== '0') {
+      sublink += '&city_id=' + selectedCity;
+    }
+    if (selectedCarMileage !== '0') {
+      sublink += '&raceInt=' + '0' + '&raceInt=' + selectedCarMileage;
+    }
+
+    navigation.navigate('AVGPrice', {sublink});
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -90,7 +119,11 @@ const AppTabs = ({navigation}: any) => {
                 AppTabsStyle.buttonCalculate,
                 {backgroundColor: colorButtonOk, marginBottom: 50},
               ]}
-              onPress={() => {}}>
+              onPress={() => {
+                if (selectedModel !== '0') {
+                  AveragePrice();
+                }
+              }}>
               <Text style={AppTabsStyle.buttonText}>Calculate</Text>
             </TouchableOpacity>
           </ScrollView>
