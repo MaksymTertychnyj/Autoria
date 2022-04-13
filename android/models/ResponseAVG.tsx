@@ -1,10 +1,10 @@
 type ResponseAVG = null | {
-  total: number;
-  arithmeticMean: number;
-  interQuartileMean: number;
-  percentiles: Map<string, number>;
-  prices: number[];
-  classifieds: number[];
+  arithmeticMean: null | number;
+  classifieds: null | number[];
+  interQuartileMean: null | number;
+  percentiles: null | Map<string, number>;
+  prices: null | number[];
+  total: null | number;
 };
 
 export default ResponseAVG;
