@@ -47,10 +47,11 @@ const AVGPriceStyle = StyleSheet.create({
     borderColor: '#D9DDDC',
   },
   headerAdvert: {
+    marginBottom: 4,
     height: Dimensions.get('window').height / 10,
     borderWidth: 1,
     borderColor: '#D9DDDC',
-    elevation: 2,
+    elevation: 5,
   },
   textAdvert: {
     fontSize: 12,

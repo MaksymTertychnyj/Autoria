@@ -23,7 +23,9 @@ const SliderImage = ({array}: any) => {
               key={e}
               resizeMode="cover"
               style={SliderImageStyle.wrap}
-              source={array ? {uri: e} : require('../../images/not_found.jpg')}
+              source={
+                e !== '' ? {uri: e} : require('../../images/not_found.jpg')
+              }
             />
           ))}
         </ScrollView>

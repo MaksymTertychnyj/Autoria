@@ -1,12 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
+import {Linking, Text, View} from 'react-native';
 import {
   FlatList,
   ScrollView,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ObjectType} from 'typescript';
 import APIRoutes from '../../../../android/api-service/APIRoutes';
 import APIService from '../../../../android/api-service/APIService';
 import DataResponse from '../../../../android/models/DTO/DataResponse';
@@ -17,12 +16,6 @@ import KeyProviderContext from '../../KeyProvider/KeyProviderContext';
 import AVGPriceStyle from './AVGPriceStyle';
 import SliderImage from '../../slider-image/SliderImage';
 
-const imagesArr = [
-  'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-674010.jpg&fm=jpg',
-  'https://media.istockphoto.com/photos/picturesque-morning-in-plitvice-national-park-colorful-spring-scene-picture-id1093110112?k=20&m=1093110112&s=612x612&w=0&h=3OhKOpvzOSJgwThQmGhshfOnZTvMExZX2R91jNNStBY=',
-  'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&w=1000&q=80',
-];
-
 const AVGPricePage = ({navigation, route}: any) => {
   const {keyApi} = useContext(KeyProviderContext);
   const [response, setResponse] = useState<ResponseAVG>(null);
@@ -30,15 +23,16 @@ const AVGPricePage = ({navigation, route}: any) => {
   const [advertisement, setAdvertisement] = useState<ModelAdvertisement>(null);
   const [selectedId, setSelectedId] = useState(null);
   const {sublink} = route.params;
-
-  const [city, setCity] = useState('');
-  const [region, setRegion] = useState('');
-  const [year, setYear] = useState('');
-  const [race, setRace] = useState('');
-  const [images, setImages] = useState([]);
+  const url = 'https://auto.ria.com/uk';
 
   const renderItem = ({item}: any) => {
     return <Item item={item} onPress={() => setSelectedId(item.classified)} />;
+  };
+
+  const openUrl = () => {
+    Linking.openURL(url + advertisement?.linkToView).catch(err =>
+      console.error("Couldn't load page", err),
+    );
   };
 
   useEffect(() => {
@@ -67,32 +61,6 @@ const AVGPricePage = ({navigation, route}: any) => {
     }
   }, [selectedId]);
 
-  useEffect(() => {
-    if (advertisement) {
-      setCity(advertisement['locationCityName' as keyof ModelAdvertisement]);
-      setRegion(
-        getRegionContent(
-          advertisement.stateData['regionName' as keyof ModelAdvertisement],
-        ),
-      );
-      setYear(advertisement.autoData['year' as keyof ModelAdvertisement]);
-      setRace(advertisement.autoData['race' as keyof ModelAdvertisement]);
-      images.length = 0;
-      images.push(
-        advertisement.photoData['seoLinkB' as keyof ModelAdvertisement],
-      );
-      images.push(
-        advertisement.photoData['seoLinkF' as keyof ModelAdvertisement],
-      );
-      images.push(
-        advertisement.photoData['seoLinkM' as keyof ModelAdvertisement],
-      );
-      images.push(
-        advertisement.photoData['seoLinkSX' as keyof ModelAdvertisement],
-      );
-    }
-  }, [advertisement]);
-
   const Item = ({item, onPress}: any) => (
     <TouchableOpacity onPress={onPress}>
       <View style={AVGPriceStyle.itemResult}>
@@ -110,19 +78,6 @@ const AVGPricePage = ({navigation, route}: any) => {
     </TouchableOpacity>
   );
 
-  const getRegionContent = (region: string) => {
-    let countCharacters = 30 - city.length;
-    let newString = '';
-    if (region.length + city.length > 30) {
-      for (let index = 0; index < countCharacters - 7; index++) {
-        region[index] ? (newString += region[index]) : null;
-      }
-      region = newString + '...';
-    }
-
-    return region;
-  };
-
   return (
     <View style={AVGPriceStyle.container}>
       <View style={AVGPriceStyle.header}>
@@ -135,36 +90,52 @@ const AVGPricePage = ({navigation, route}: any) => {
           {response?.arithmeticMean?.toFixed(2)} $
         </Text>
       </View>
+
       <SafeAreaView style={AVGPriceStyle.containerAdvert}>
-        <View style={AVGPriceStyle.headerAdvert}>
-          <View style={[AVGPriceStyle.header]}>
-            <Text style={[AVGPriceStyle.textAdvert, {fontWeight: 'bold'}]}>
-              City:
-            </Text>
-            <Text style={AVGPriceStyle.textAdvert}>{city + ','}</Text>
-            <Text style={AVGPriceStyle.textAdvert}>{region} обл. </Text>
+        <TouchableOpacity onPress={openUrl}>
+          <View style={AVGPriceStyle.headerAdvert}>
+            <View style={[AVGPriceStyle.header]}>
+              <Text style={[AVGPriceStyle.textAdvert, {fontWeight: 'bold'}]}>
+                City:
+              </Text>
+              <Text style={AVGPriceStyle.textAdvert}>
+                {(advertisement ? advertisement?.locationCityName : '') + ','}
+              </Text>
+              <Text style={AVGPriceStyle.textAdvert}>
+                {(advertisement ? advertisement?.stateData?.regionName : '') +
+                  ' ' +
+                  'обл.'}
+              </Text>
+            </View>
+            <View style={[AVGPriceStyle.header]}>
+              <Text
+                style={[
+                  AVGPriceStyle.textAdvert,
+                  {marginLeft: 5, fontWeight: 'bold'},
+                ]}>
+                Year:
+              </Text>
+              <Text style={AVGPriceStyle.textAdvert}>
+                {advertisement?.autoData?.year as any}
+              </Text>
+              <Text
+                style={[
+                  AVGPriceStyle.textAdvert,
+                  {marginLeft: 10, fontWeight: 'bold'},
+                ]}>
+                Race:
+              </Text>
+              <Text style={AVGPriceStyle.textAdvert}>
+                {advertisement?.autoData?.race as any}
+              </Text>
+            </View>
           </View>
-          <View style={[AVGPriceStyle.header]}>
-            <Text
-              style={[
-                AVGPriceStyle.textAdvert,
-                {marginLeft: 5, fontWeight: 'bold'},
-              ]}>
-              Year:
-            </Text>
-            <Text style={AVGPriceStyle.textAdvert}>{year}</Text>
-            <Text
-              style={[
-                AVGPriceStyle.textAdvert,
-                {marginLeft: 10, fontWeight: 'bold'},
-              ]}>
-              Race:
-            </Text>
-            <Text style={AVGPriceStyle.textAdvert}>{race}</Text>
-          </View>
-        </View>
-        <SliderImage array={images} />
+        </TouchableOpacity>
+        <SliderImage
+          array={advertisement ? [advertisement.photoData?.seoLinkB] : ['']}
+        />
       </SafeAreaView>
+
       <SafeAreaView>
         <ScrollView
           nestedScrollEnabled={true}
