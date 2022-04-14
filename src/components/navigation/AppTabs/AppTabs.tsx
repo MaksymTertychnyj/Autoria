@@ -86,7 +86,7 @@ const AppTabs = ({navigation}: any) => {
           <ScrollView
             nestedScrollEnabled={true}
             horizontal={false}
-            style={{width: '99%'}}>
+            style={{width: '100%'}}>
             <View style={AppTabsStyle.header}>
               <Image
                 source={require('../../../images/logo_ria.png')}
@@ -98,9 +98,9 @@ const AppTabs = ({navigation}: any) => {
               onPress={() => {
                 navigation.navigate('EnterKeyPage');
               }}>
-              <Text style={{color: '#63C5DA', fontSize: 18}}>Change key</Text>
+              <Text style={{color: '#63C5DA', fontSize: 14}}>Change key</Text>
             </TouchableOpacity>
-            <View>
+            <View style={{alignItems: 'flex-start'}}>
               <SelectTypeTransport selectType={setSelectedTypeTransport} />
               <SelectMark selectMark={setSelectedMarkTransport} />
               <SelectModel selectModel={setSelectedModel} />

@@ -20,7 +20,6 @@ const AppTabsStyle = StyleSheet.create({
   dropDownList: {
     flexDirection: 'row',
     paddingTop: 30,
-    alignSelf: 'center',
   },
   buttonCalculate: {
     width: 100,
@@ -33,7 +32,7 @@ const AppTabsStyle = StyleSheet.create({
     elevation: 6,
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 12,
     textAlign: 'center',
     color: 'white',
     fontFamily: Font.Milliard.Milliard,

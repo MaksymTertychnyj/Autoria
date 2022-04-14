@@ -38,7 +38,7 @@ const EnterKeyPage = ({navigation}: any) => {
         />
       </View>
 
-      <View style={{paddingVertical: 50}}>
+      <View style={{paddingVertical: 0}}>
         <View style={{flexDirection: 'row', alignSelf: 'center'}}>
           <TextInput
             style={EnterKeyStyles.textInput}

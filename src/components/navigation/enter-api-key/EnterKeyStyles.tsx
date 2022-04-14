@@ -3,7 +3,7 @@ import Font from '../../../data/fonts/Font';
 
 const EnterKeyStyles = StyleSheet.create({
   container: {
-    paddingTop: 150,
+    paddingTop: 50,
   },
 
   image: {
@@ -15,7 +15,7 @@ const EnterKeyStyles = StyleSheet.create({
   text: {
     alignSelf: 'center',
     marginTop: 5,
-    fontSize: 21,
+    fontSize: 18,
     fontWeight: 'bold',
     fontFamily: Font.OpenSans.OpenSans,
     letterSpacing: 0.35,
@@ -26,7 +26,7 @@ const EnterKeyStyles = StyleSheet.create({
     width: 280,
     height: 50,
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 14,
     letterSpacing: 0.35,
     elevation: 0.8,
   },
@@ -43,7 +43,7 @@ const EnterKeyStyles = StyleSheet.create({
   },
 
   buttonText: {
-    fontSize: 16,
+    fontSize: 12,
     textAlign: 'center',
     color: 'white',
     fontFamily: Font.Milliard.Milliard,

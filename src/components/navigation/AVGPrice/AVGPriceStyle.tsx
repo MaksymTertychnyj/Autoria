@@ -11,7 +11,7 @@ const AVGPriceStyle = StyleSheet.create({
     marginTop: 5,
   },
   textResult: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: 'bold',
     marginTop: 5,
     marginLeft: 10,
@@ -35,9 +35,9 @@ const AVGPriceStyle = StyleSheet.create({
   },
   textContainerResult: {
     marginRight: 20,
-    marginTop: 15,
-    fontSize: 23,
-    fontWeight: 'bold',
+    marginTop: 0,
+    fontSize: 14,
+    //fontWeight: 'bold',
     letterSpacing: 0.25,
     color: '#5DBB63',
   },
@@ -53,9 +53,9 @@ const AVGPriceStyle = StyleSheet.create({
     elevation: 2,
   },
   textAdvert: {
-    fontSize: 18,
-    marginTop: 5,
-    marginLeft: 10,
+    fontSize: 12,
+    marginTop: 0,
+    marginLeft: 5,
     letterSpacing: 0.25,
   },
 });

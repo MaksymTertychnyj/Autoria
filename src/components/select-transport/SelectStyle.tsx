@@ -13,7 +13,6 @@ const SelectTypeStyle = StyleSheet.create({
     width: 270,
     paddingTop: 40,
     alignItems: 'center',
-    marginLeft: 20,
   },
 });
 

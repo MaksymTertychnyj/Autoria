@@ -63,7 +63,9 @@ const AVGPricePage = ({navigation, route}: any) => {
     if (advertisement) {
       setCity(advertisement['locationCityName' as keyof ModelAdvertisement]);
       setRegion(
-        advertisement.stateData['regionName' as keyof ModelAdvertisement],
+        getRegionContent(
+          advertisement.stateData['regionName' as keyof ModelAdvertisement],
+        ),
       );
       setYear(advertisement.autoData['year' as keyof ModelAdvertisement]);
       setRace(advertisement.autoData['race' as keyof ModelAdvertisement]);
@@ -87,12 +89,25 @@ const AVGPricePage = ({navigation, route}: any) => {
     </TouchableOpacity>
   );
 
+  const getRegionContent = (region: string) => {
+    let countCharacters = 30 - city.length;
+    let newString = '';
+    if (region.length + city.length > 30) {
+      for (let index = 0; index < countCharacters - 7; index++) {
+        region[index] ? (newString += region[index]) : null;
+      }
+      region = newString + '...';
+    }
+
+    return region;
+  };
+
   return (
     <View style={AVGPriceStyle.container}>
       <View style={AVGPriceStyle.header}>
         <Text style={[AVGPriceStyle.textResult, {marginLeft: 0}]}>Total:</Text>
-        <Text style={AVGPriceStyle.textResult}>{response?.total}</Text>
-        <Text style={[AVGPriceStyle.textResult, {marginLeft: 70}]}>
+        <Text style={AVGPriceStyle.textResult}>{response?.total + ','}</Text>
+        <Text style={[AVGPriceStyle.textResult, {marginLeft: 20}]}>
           Average price:
         </Text>
         <Text style={AVGPriceStyle.textResult}>
@@ -112,7 +127,7 @@ const AVGPricePage = ({navigation, route}: any) => {
             <Text
               style={[
                 AVGPriceStyle.textAdvert,
-                {marginLeft: 10, fontWeight: 'bold'},
+                {marginLeft: 5, fontWeight: 'bold'},
               ]}>
               Year:
             </Text>
@@ -129,7 +144,10 @@ const AVGPricePage = ({navigation, route}: any) => {
         </View>
       </SafeAreaView>
       <SafeAreaView>
-        <ScrollView style={AVGPriceStyle.containerResult}>
+        <ScrollView
+          nestedScrollEnabled={true}
+          horizontal={false}
+          style={AVGPriceStyle.containerResult}>
           <FlatList
             data={dataList}
             renderItem={renderItem}
