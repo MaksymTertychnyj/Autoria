@@ -37,7 +37,7 @@ const SelectModel = ({selectModel}: any) => {
       });
       setValueModelTransport('0');
     }
-  }, [selectedMark]);
+  }, [selectedTypeTransport, selectedMark]);
 
   useEffect(() => {
     if (selectedTypeTransport !== '0' && selectedMark !== '0') {
