@@ -1,6 +1,9 @@
 import {Dimensions, Platform, StyleSheet} from 'react-native';
 import Font from '../../../data/fonts/Font';
 
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
+
 const AVGPriceStyle = StyleSheet.create({
   container: {
     flex: 1,
@@ -54,8 +57,9 @@ const AVGPriceStyle = StyleSheet.create({
     elevation: 5,
   },
   textAdvert: {
+    color: '#787276',
     fontSize: 12,
-    marginTop: 0,
+    marginTop: HEIGHT / 250,
     marginLeft: 5,
     letterSpacing: 0.25,
   },
