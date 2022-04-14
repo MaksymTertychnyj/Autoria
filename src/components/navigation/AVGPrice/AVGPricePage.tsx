@@ -15,6 +15,13 @@ import ResponseAVG from '../../../../android/models/ResponseAVG';
 import ResponseMapper from '../../data-mappers/ResponseMapper';
 import KeyProviderContext from '../../KeyProvider/KeyProviderContext';
 import AVGPriceStyle from './AVGPriceStyle';
+import SliderImage from '../../slider-image/SliderImage';
+
+const imagesArr = [
+  'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?cs=srgb&dl=pexels-anjana-c-674010.jpg&fm=jpg',
+  'https://media.istockphoto.com/photos/picturesque-morning-in-plitvice-national-park-colorful-spring-scene-picture-id1093110112?k=20&m=1093110112&s=612x612&w=0&h=3OhKOpvzOSJgwThQmGhshfOnZTvMExZX2R91jNNStBY=',
+  'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&w=1000&q=80',
+];
 
 const AVGPricePage = ({navigation, route}: any) => {
   const {keyApi} = useContext(KeyProviderContext);
@@ -28,6 +35,7 @@ const AVGPricePage = ({navigation, route}: any) => {
   const [region, setRegion] = useState('');
   const [year, setYear] = useState('');
   const [race, setRace] = useState('');
+  const [images, setImages] = useState([]);
 
   const renderItem = ({item}: any) => {
     return <Item item={item} onPress={() => setSelectedId(item.classified)} />;
@@ -69,6 +77,19 @@ const AVGPricePage = ({navigation, route}: any) => {
       );
       setYear(advertisement.autoData['year' as keyof ModelAdvertisement]);
       setRace(advertisement.autoData['race' as keyof ModelAdvertisement]);
+      images.length = 0;
+      images.push(
+        advertisement.photoData['seoLinkB' as keyof ModelAdvertisement],
+      );
+      images.push(
+        advertisement.photoData['seoLinkF' as keyof ModelAdvertisement],
+      );
+      images.push(
+        advertisement.photoData['seoLinkM' as keyof ModelAdvertisement],
+      );
+      images.push(
+        advertisement.photoData['seoLinkSX' as keyof ModelAdvertisement],
+      );
     }
   }, [advertisement]);
 
@@ -142,6 +163,7 @@ const AVGPricePage = ({navigation, route}: any) => {
             <Text style={AVGPriceStyle.textAdvert}>{race}</Text>
           </View>
         </View>
+        <SliderImage array={images} />
       </SafeAreaView>
       <SafeAreaView>
         <ScrollView
