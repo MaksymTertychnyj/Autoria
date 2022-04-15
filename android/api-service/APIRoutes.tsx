@@ -23,7 +23,8 @@ const APIRoutes = {
     APIConfig.URL + 'categories/' + type + '/marks?api_key=' + key,
 
   getModelTransport: (type: string, mark: string, key: string) =>
-    'http://api.auto.ria.com/categories/' +
+    APIConfig.URL +
+    'categories/' +
     type +
     '/marks/' +
     mark +
