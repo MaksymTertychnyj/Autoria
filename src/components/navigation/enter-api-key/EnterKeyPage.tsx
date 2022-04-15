@@ -50,13 +50,16 @@ const EnterKeyPage = ({navigation}: any) => {
             defaultValue={text}
           />
           <TouchableOpacity
-            style={[EnterKeyStyles.buttonOk, {backgroundColor: colorButtonOk}]}
+            style={[
+              EnterKeyStyles.buttonOk,
+              {backgroundColor: colorButtonOk, justifyContent: 'center'},
+            ]}
             onPress={() => setKeyApi(text)}>
             <Text style={[EnterKeyStyles.buttonText]}>Ok</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          style={[EnterKeyStyles.buttonGetKey]}
+          style={[EnterKeyStyles.buttonGetKey, {justifyContent: 'center'}]}
           onPress={() => openUrl()}>
           <Text style={EnterKeyStyles.buttonText}>Get Api key</Text>
         </TouchableOpacity>

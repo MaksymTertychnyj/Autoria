@@ -47,7 +47,8 @@ const EnterKeyStyles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontFamily: Font.Milliard.Milliard,
-    paddingTop: 8,
+    justifyContent: 'center',
+    //paddingTop: 8,
   },
 
   buttonOk: {
