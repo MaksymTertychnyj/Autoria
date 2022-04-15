@@ -125,6 +125,10 @@ var years = [
   },
   {
     label: '2011',
+    value: '2011',
+  },
+  {
+    label: '2012',
     value: '2012',
   },
   {
