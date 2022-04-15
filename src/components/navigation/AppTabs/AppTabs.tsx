@@ -117,7 +117,11 @@ const AppTabs = ({navigation}: any) => {
             <TouchableOpacity
               style={[
                 AppTabsStyle.buttonCalculate,
-                {backgroundColor: colorButtonOk, marginBottom: 50},
+                {
+                  backgroundColor: colorButtonOk,
+                  marginBottom: 50,
+                  justifyContent: 'center',
+                },
               ]}
               onPress={() => {
                 if (selectedModel !== '0') {

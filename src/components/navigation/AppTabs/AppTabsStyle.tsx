@@ -36,7 +36,6 @@ const AppTabsStyle = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontFamily: Font.Milliard.Milliard,
-    paddingTop: 8,
   },
   buttonChangeKey: {
     marginTop: 30,
