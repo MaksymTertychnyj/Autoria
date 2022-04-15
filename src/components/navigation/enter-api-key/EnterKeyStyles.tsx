@@ -23,6 +23,7 @@ const EnterKeyStyles = StyleSheet.create({
   },
 
   textInput: {
+    color: '#787276',
     width: 280,
     height: 50,
     textAlign: 'center',
