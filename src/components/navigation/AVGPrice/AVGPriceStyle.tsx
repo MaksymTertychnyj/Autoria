@@ -11,7 +11,8 @@ const AVGPriceStyle = StyleSheet.create({
   header: {
     flexDirection: 'row',
     marginLeft: 10,
-    marginTop: 5,
+
+    //marginTop: 5,
   },
   textResult: {
     fontSize: 12,
@@ -50,16 +51,18 @@ const AVGPriceStyle = StyleSheet.create({
     borderColor: '#D9DDDC',
   },
   headerAdvert: {
+    justifyContent: 'center',
     marginBottom: 4,
     height: Dimensions.get('window').height / 10,
     borderWidth: 1,
     borderColor: '#D9DDDC',
-    elevation: 5,
+    elevation: 3,
   },
   textAdvert: {
     color: '#787276',
     fontSize: 12,
-    marginTop: HEIGHT / 250,
+    marginTop: HEIGHT / 200,
+    marginBottom: HEIGHT / 200,
     marginLeft: 5,
     letterSpacing: 0.25,
   },

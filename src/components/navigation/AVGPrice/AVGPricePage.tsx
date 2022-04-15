@@ -73,14 +73,16 @@ const AVGPricePage = ({navigation, route}: any) => {
         <Text style={[AVGPriceStyle.textContainerResult, {color: '#597D35'}]}>
           Price:
         </Text>
-        <Text style={AVGPriceStyle.textContainerResult}>{item?.price}</Text>
+        <Text style={AVGPriceStyle.textContainerResult}>
+          {item?.price.toFixed(0)}
+        </Text>
       </View>
     </TouchableOpacity>
   );
 
   return (
     <View style={AVGPriceStyle.container}>
-      <View style={AVGPriceStyle.header}>
+      <View style={[AVGPriceStyle.header]}>
         <Text style={[AVGPriceStyle.textResult, {marginLeft: 0}]}>Total:</Text>
         <Text style={AVGPriceStyle.textResult}>{response?.total + ','}</Text>
         <Text style={[AVGPriceStyle.textResult, {marginLeft: 20}]}>
@@ -93,7 +95,7 @@ const AVGPricePage = ({navigation, route}: any) => {
 
       <SafeAreaView style={AVGPriceStyle.containerAdvert}>
         <TouchableOpacity onPress={openUrl}>
-          <View style={AVGPriceStyle.headerAdvert}>
+          <View style={[AVGPriceStyle.headerAdvert]}>
             <View style={[AVGPriceStyle.header]}>
               <Text style={[AVGPriceStyle.textAdvert, {fontWeight: 'bold'}]}>
                 City:

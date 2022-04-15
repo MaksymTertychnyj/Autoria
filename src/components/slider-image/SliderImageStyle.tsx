@@ -7,6 +7,7 @@ const HEIGHT = Dimensions.get('window').height;
 const SliderImageStyle = StyleSheet.create({
   container: {
     flex: 1,
+    elevation: 5,
   },
   wrap: {
     width: WIDTH,
