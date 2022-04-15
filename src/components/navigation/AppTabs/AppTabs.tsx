@@ -43,10 +43,10 @@ const AppTabs = ({navigation}: any) => {
     sublink += '&marka_id=' + selectedMark + '&model_id=' + selectedModel;
 
     if (selectedMinYear !== '1980') {
-      sublink += '& yers=' + selectedMinYear;
+      sublink += '&yers=' + selectedMinYear;
     }
     if (selectedMaxYear !== '1980') {
-      sublink += '& yers=' + selectedMaxYear;
+      sublink += '&yers=' + selectedMaxYear;
     }
     if (selectedFuel !== '0') {
       sublink += '&fuel_id=' + selectedFuel;
