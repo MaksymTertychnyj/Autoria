@@ -10,8 +10,10 @@ import DataMapper from '../DataMapper';
 import KeyProviderContext from '../KeyProvider/KeyProviderContext';
 import AppTabsContext from '../navigation/AppTabs/AppTabsContext';
 import SelectTypeStyle from '../select-transport/SelectStyle';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const City = ({selectCity}: any) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const {keyApi} = useContext(KeyProviderContext);
   const {selectedRegion} = useContext(AppTabsContext);
   const [openCity, setOpenCity] = useState(false);
@@ -22,11 +24,13 @@ const City = ({selectCity}: any) => {
 
   useEffect(() => {
     if (selectedRegion !== '0') {
+      setLoading(true);
       APIService.get(APIRoutes.getCities(selectedRegion, keyApi)).then(
         result => {
           if (result) {
             setItemsCity(DataMapper(result.data) as ItemType<ValueType>[]);
           }
+          setLoading(false);
         },
       );
       setValueCity('0');
@@ -54,7 +58,9 @@ const City = ({selectCity}: any) => {
         setOpen={setOpenCity}
         setValue={setValueCity}
         dropDownDirection="TOP"
+        searchable={true}
       />
+      <Spinner visible={loading} textStyle={{color: '#FFF'}} />
     </View>
   );
 };

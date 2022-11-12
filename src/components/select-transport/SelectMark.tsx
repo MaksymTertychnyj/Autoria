@@ -10,8 +10,10 @@ import DataMapper from '../DataMapper';
 import KeyProviderContext from '../KeyProvider/KeyProviderContext';
 import AppTabsContext from '../navigation/AppTabs/AppTabsContext';
 import SelectTypeStyle from './SelectStyle';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const SelectMark = ({selectMark}: any) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const {keyApi} = useContext(KeyProviderContext);
   const {selectedTypeTransport} = useContext(AppTabsContext);
   const [openMarkTransport, setOpenMarkTransport] = useState(false);
@@ -22,6 +24,7 @@ const SelectMark = ({selectMark}: any) => {
 
   useEffect(() => {
     if (selectedTypeTransport !== '0') {
+      setLoading(true);
       APIService.get(
         APIRoutes.getMarkTransport(selectedTypeTransport, keyApi),
       ).then(result => {
@@ -30,6 +33,7 @@ const SelectMark = ({selectMark}: any) => {
             DataMapper(result.data) as ItemType<ValueType>[],
           );
         }
+        setLoading(false);
       });
       setValueMarkTransport('0');
     }
@@ -56,6 +60,7 @@ const SelectMark = ({selectMark}: any) => {
         setOpen={setOpenMarkTransport}
         setValue={setValueMarkTransport}
         dropDownDirection="TOP"
+        searchable={true}
       />
     </View>
   );

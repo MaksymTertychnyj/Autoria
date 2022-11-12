@@ -46,6 +46,7 @@ const SelectRegion = ({selectRegion}: any) => {
         setOpen={setOpenRegion}
         setValue={setValueRegion}
         dropDownDirection="TOP"
+        searchable={true}
       />
     </View>
   );

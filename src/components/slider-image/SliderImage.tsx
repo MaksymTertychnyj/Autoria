@@ -3,8 +3,9 @@ import {View, Text, Dimensions, TouchableOpacity, Image} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import SliderImageStyle from './SliderImageStyle';
+import Spinner from 'react-native-loading-spinner-overlay';
 
-const SliderImage = ({array}: any) => {
+const SliderImage = ({array, loading}: any) => {
   const images: string[] = array;
 
   const onChange = ({nativeEvent}: any) => {};
@@ -12,6 +13,7 @@ const SliderImage = ({array}: any) => {
   return (
     <SafeAreaView style={SliderImageStyle.container}>
       <View style={SliderImageStyle.wrap}>
+        <Spinner visible={loading} textStyle={{color: '#FFF'}} />
         <ScrollView
           onScroll={({nativeEvent}) => onChange(nativeEvent)}
           showsHorizontalScrollIndicator={false}

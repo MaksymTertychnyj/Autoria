@@ -15,8 +15,11 @@ import ResponseMapper from '../../data-mappers/ResponseMapper';
 import KeyProviderContext from '../../KeyProvider/KeyProviderContext';
 import AVGPriceStyle from './AVGPriceStyle';
 import SliderImage from '../../slider-image/SliderImage';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const AVGPricePage = ({navigation, route}: any) => {
+  const [loadingPage, setLoadingPage] = useState<boolean>(false);
+  const [loadingItem, setLoadingItem] = useState<boolean>(false);
   const {keyApi} = useContext(KeyProviderContext);
   const [response, setResponse] = useState<ResponseAVG>(null);
   const [dataList, setDataList] = useState<DataResponse[]>();
@@ -26,21 +29,32 @@ const AVGPricePage = ({navigation, route}: any) => {
   const url = 'https://auto.ria.com/uk';
 
   const renderItem = ({item}: any) => {
-    return <Item item={item} onPress={() => setSelectedId(item.classified)} />;
+    return (
+      <Item
+        item={item}
+        onPress={() => setSelectedId(item.classified)}
+        backgroundColor={item.classified === selectedId ? '#6e3b6e' : '#f9c2ff'}
+        textColor={item.classified === selectedId ? 'white' : 'black'}
+      />
+    );
   };
 
   const openUrl = () => {
-    Linking.openURL(url + advertisement?.linkToView).catch(err =>
+    Linking.openURL(url + advertisement?.linkToView).catch((err: any) =>
       console.error("Couldn't load page", err),
     );
   };
 
   useEffect(() => {
-    APIService.get(APIRoutes.getRequestAVG(sublink, keyApi)).then(result => {
-      if (result) {
-        setResponse(result.data as ResponseAVG);
-      }
-    });
+    setLoadingPage(true);
+    APIService.get(APIRoutes.getRequestAVG(sublink, keyApi)).then(
+      (result: {data: ResponseAVG}) => {
+        if (result) {
+          setResponse(result.data);
+        }
+        setLoadingPage(false);
+      },
+    );
   }, [sublink]);
 
   useEffect(() => {
@@ -51,26 +65,28 @@ const AVGPricePage = ({navigation, route}: any) => {
 
   useEffect(() => {
     if (selectedId) {
+      setLoadingItem(true);
       APIService.get(
         APIRoutes.getResponseAdvertisement(selectedId, keyApi),
-      ).then(result => {
+      ).then((result: {data: ModelAdvertisement}) => {
         if (result) {
-          setAdvertisement(result.data as ModelAdvertisement);
+          setAdvertisement(result.data);
         }
+        setLoadingItem(false);
       });
     }
   }, [selectedId]);
 
-  const Item = ({item, onPress}: any) => (
-    <TouchableOpacity onPress={onPress}>
+  const Item = ({item, onPress, backgroundColor, textColor}: any) => (
+    <TouchableOpacity onPress={onPress} style={[{backgroundColor}]}>
       <View style={AVGPriceStyle.itemResult}>
-        <Text style={[AVGPriceStyle.textContainerResult, {color: '#597D35'}]}>
+        <Text style={[AVGPriceStyle.textContainerResult, {color: textColor}]}>
           Id:
         </Text>
         <Text style={AVGPriceStyle.textContainerResult}>
           {item?.classified},
         </Text>
-        <Text style={[AVGPriceStyle.textContainerResult, {color: '#597D35'}]}>
+        <Text style={[AVGPriceStyle.textContainerResult, {color: textColor}]}>
           Price:
         </Text>
         <Text style={AVGPriceStyle.textContainerResult}>
@@ -82,6 +98,11 @@ const AVGPricePage = ({navigation, route}: any) => {
 
   return (
     <View style={AVGPriceStyle.container}>
+      <Spinner
+        visible={loadingPage}
+        textContent={'Loading ...'}
+        textStyle={{color: '#FFF'}}
+      />
       <View style={[AVGPriceStyle.header]}>
         <Text style={[AVGPriceStyle.textResult, {marginLeft: 0}]}>Total:</Text>
         <Text style={AVGPriceStyle.textResult}>{response?.total + ','}</Text>
@@ -135,6 +156,7 @@ const AVGPricePage = ({navigation, route}: any) => {
         </TouchableOpacity>
         <SliderImage
           array={advertisement ? [advertisement.photoData?.seoLinkB] : ['']}
+          loading={loadingItem}
         />
       </SafeAreaView>
 
