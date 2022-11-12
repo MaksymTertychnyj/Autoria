@@ -24,6 +24,9 @@ buildscript {
 }
 
 allprojects {
+    configurations.all { 
+        resolutionStrategy { force 'com.facebook.react:react-native:0.68.0'} //select Version you used 
+        }
     repositories {
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
@@ -42,5 +45,6 @@ allprojects {
         }
         google()
         maven { url 'https://www.jitpack.io' }
+        maven { url "https://plugins.gradle.org/m2/"}
     }
 }
