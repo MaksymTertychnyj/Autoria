@@ -12,10 +12,10 @@
   "dependencies": {
     "@microsoft/applicationinsights-react-native": "^2.4.4",
     "@microsoft/applicationinsights-web": "^2.7.4",
-    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.1",
+    "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-navigation/stack": "^6.2.1",
     "axios": "^0.26.1",
     "react": "17.0.2",
