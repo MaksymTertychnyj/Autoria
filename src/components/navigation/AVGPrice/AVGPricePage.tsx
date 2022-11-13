@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {Linking, Text, View} from 'react-native';
 import {
   FlatList,
@@ -16,6 +16,7 @@ import KeyProviderContext from '../../KeyProvider/KeyProviderContext';
 import AVGPriceStyle from './AVGPriceStyle';
 import SliderImage from '../../slider-image/SliderImage';
 import Spinner from 'react-native-loading-spinner-overlay';
+import AdvertisementListItem from './AdvertisementListItem';
 
 const AVGPricePage = ({navigation, route}: any) => {
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
@@ -24,17 +25,19 @@ const AVGPricePage = ({navigation, route}: any) => {
   const [response, setResponse] = useState<ResponseAVG>(null);
   const [dataList, setDataList] = useState<DataResponse[]>();
   const [advertisement, setAdvertisement] = useState<ModelAdvertisement>(null);
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const {sublink} = route.params;
   const url = 'https://auto.ria.com/uk';
 
   const renderItem = ({item}: any) => {
     return (
-      <Item
+      <AdvertisementListItem
         item={item}
-        onPress={() => setSelectedId(item.classified)}
-        backgroundColor={item.classified === selectedId ? '#6e3b6e' : '#f9c2ff'}
-        textColor={item.classified === selectedId ? 'white' : 'black'}
+        onPress={() => setSelectedIndex(item.classified)}
+        backgroundColor={
+          item.classified === selectedIndex ? '#6e3b6e' : '#f9c2ff'
+        }
+        textColor={item.classified === selectedIndex ? 'white' : 'black'}
       />
     );
   };
@@ -46,55 +49,44 @@ const AVGPricePage = ({navigation, route}: any) => {
   };
 
   useEffect(() => {
-    setLoadingPage(true);
-    APIService.get(APIRoutes.getRequestAVG(sublink, keyApi)).then(
-      (result: {data: ResponseAVG}) => {
-        if (result) {
-          setResponse(result.data);
-        }
-        setLoadingPage(false);
-      },
-    );
+    loadAverageData();
   }, [sublink]);
 
   useEffect(() => {
-    if (response) {
-      setDataList(ResponseMapper(response));
+    if (selectedIndex) {
+      loadAdvertisementData();
     }
-  }, [response]);
+  }, [selectedIndex]);
 
-  useEffect(() => {
-    if (selectedId) {
+  async function loadAdvertisementData() {
+    try {
       setLoadingItem(true);
-      APIService.get(
-        APIRoutes.getResponseAdvertisement(selectedId, keyApi),
-      ).then((result: {data: ModelAdvertisement}) => {
-        if (result) {
-          setAdvertisement(result.data);
-        }
-        setLoadingItem(false);
-      });
+      const result = await APIService.get(
+        APIRoutes.getResponseAdvertisement(selectedIndex!.toString(), keyApi),
+      );
+      setAdvertisement(result.data);
+    } catch (e) {
+      console.error('failed to load advertisement data');
+    } finally {
+      setLoadingItem(false);
     }
-  }, [selectedId]);
+  }
 
-  const Item = ({item, onPress, backgroundColor, textColor}: any) => (
-    <TouchableOpacity onPress={onPress} style={[{backgroundColor}]}>
-      <View style={AVGPriceStyle.itemResult}>
-        <Text style={[AVGPriceStyle.textContainerResult, {color: textColor}]}>
-          Id:
-        </Text>
-        <Text style={AVGPriceStyle.textContainerResult}>
-          {item?.classified},
-        </Text>
-        <Text style={[AVGPriceStyle.textContainerResult, {color: textColor}]}>
-          Price:
-        </Text>
-        <Text style={AVGPriceStyle.textContainerResult}>
-          {item?.price.toFixed(0)}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
+  async function loadAverageData() {
+    try {
+      setLoadingPage(true);
+      const result = await APIService.get(
+        APIRoutes.getRequestAVG(sublink, keyApi),
+      );
+      setResponse(result.data);
+      setDataList(ResponseMapper(result.data));
+      setSelectedIndex(result.data.classifieds[0]);
+    } catch (e) {
+      console.error('failed to load average data');
+    } finally {
+      setLoadingPage(false);
+    }
+  }
 
   return (
     <View style={AVGPriceStyle.container}>
@@ -159,7 +151,6 @@ const AVGPricePage = ({navigation, route}: any) => {
           loading={loadingItem}
         />
       </SafeAreaView>
-
       <SafeAreaView>
         <ScrollView
           nestedScrollEnabled={true}
@@ -168,8 +159,7 @@ const AVGPricePage = ({navigation, route}: any) => {
           <FlatList
             data={dataList}
             renderItem={renderItem}
-            keyExtractor={item => item?.classified as any}
-            extraData={selectedId}
+            extraData={selectedIndex}
           />
         </ScrollView>
       </SafeAreaView>

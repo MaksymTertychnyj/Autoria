@@ -24,14 +24,13 @@ const AVGPriceStyle = StyleSheet.create({
   },
   containerResult: {
     width: '100%',
-    height: Dimensions.get('window').height / 2 - 90,
+    height: Dimensions.get('window').height / 2 - 55,
     alignSelf: 'center',
-    marginTop: 10,
+    marginTop: 5,
     borderWidth: 1,
     borderColor: '#D9DDDC',
   },
   itemResult: {
-    flexDirection: 'row',
     alignSelf: 'center',
     marginBottom: 20,
     borderBottomWidth: 1,
@@ -41,7 +40,6 @@ const AVGPriceStyle = StyleSheet.create({
     marginRight: 20,
     marginTop: 0,
     fontSize: 14,
-    //fontWeight: 'bold',
     letterSpacing: 0.25,
     color: '#5DBB63',
   },
@@ -52,7 +50,7 @@ const AVGPriceStyle = StyleSheet.create({
   },
   headerAdvert: {
     justifyContent: 'center',
-    marginBottom: 4,
+    marginBottom: 2,
     height: Dimensions.get('window').height / 10,
     borderWidth: 1,
     borderColor: '#D9DDDC',

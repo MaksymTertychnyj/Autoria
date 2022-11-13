@@ -12,6 +12,7 @@ const SliderImageStyle = StyleSheet.create({
   wrap: {
     width: WIDTH,
     height: HEIGHT * 0.4,
+    alignSelf: 'center',
   },
 });
 
