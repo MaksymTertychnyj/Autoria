@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {Linking, Text, View} from 'react-native';
+import {Button, Linking, Text, View} from 'react-native';
 import {
   FlatList,
   ScrollView,
@@ -25,7 +25,7 @@ const AVGPricePage = ({navigation, route}: any) => {
   const [response, setResponse] = useState<ResponseAVG>(null);
   const [dataList, setDataList] = useState<DataResponse[]>();
   const [advertisement, setAdvertisement] = useState<ModelAdvertisement>(null);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedItem, setSelectedItem] = useState<number | null>(null);
   const {sublink} = route.params;
   const url = 'https://auto.ria.com/uk';
 
@@ -33,11 +33,11 @@ const AVGPricePage = ({navigation, route}: any) => {
     return (
       <AdvertisementListItem
         item={item}
-        onPress={() => setSelectedIndex(item.classified)}
+        onPress={() => setSelectedItem(item.classified)}
         backgroundColor={
-          item.classified === selectedIndex ? '#6e3b6e' : '#f9c2ff'
+          item.classified === selectedItem ? '#6e3b6e' : '#f9c2ff'
         }
-        textColor={item.classified === selectedIndex ? 'white' : 'black'}
+        textColor={item.classified === selectedItem ? 'white' : 'black'}
       />
     );
   };
@@ -53,16 +53,16 @@ const AVGPricePage = ({navigation, route}: any) => {
   }, [sublink]);
 
   useEffect(() => {
-    if (selectedIndex) {
+    if (selectedItem) {
       loadAdvertisementData();
     }
-  }, [selectedIndex]);
+  }, [selectedItem]);
 
   async function loadAdvertisementData() {
     try {
       setLoadingItem(true);
       const result = await APIService.get(
-        APIRoutes.getResponseAdvertisement(selectedIndex!.toString(), keyApi),
+        APIRoutes.getResponseAdvertisement(selectedItem!.toString(), keyApi),
       );
       setAdvertisement(result.data);
     } catch (e) {
@@ -80,11 +80,37 @@ const AVGPricePage = ({navigation, route}: any) => {
       );
       setResponse(result.data);
       setDataList(ResponseMapper(result.data));
-      setSelectedIndex(result.data.classifieds[0]);
+      setSelectedItem(result.data.classifieds[0]);
     } catch (e) {
       console.error('failed to load average data');
     } finally {
       setLoadingPage(false);
+    }
+  }
+
+  function onClickNext() {
+    if (response && selectedItem) {
+      const currentIndex = response.classifieds?.indexOf(
+        selectedItem,
+      ) as number;
+
+      const nextItem = response.classifieds![currentIndex + 1];
+      if (nextItem) {
+        setSelectedItem(nextItem);
+      }
+    }
+  }
+
+  function onClickPrev() {
+    if (response && selectedItem) {
+      const currentIndex = response.classifieds?.indexOf(
+        selectedItem,
+      ) as number;
+
+      const prevItem = response.classifieds![currentIndex - 1];
+      if (prevItem) {
+        setSelectedItem(prevItem);
+      }
     }
   }
 
@@ -149,6 +175,8 @@ const AVGPricePage = ({navigation, route}: any) => {
         <SliderImage
           array={advertisement ? [advertisement.photoData?.seoLinkB] : ['']}
           loading={loadingItem}
+          onClickNext={onClickNext}
+          onClickPrev={onClickPrev}
         />
       </SafeAreaView>
       <SafeAreaView>
@@ -159,7 +187,7 @@ const AVGPricePage = ({navigation, route}: any) => {
           <FlatList
             data={dataList}
             renderItem={renderItem}
-            extraData={selectedIndex}
+            extraData={selectedItem}
           />
         </ScrollView>
       </SafeAreaView>

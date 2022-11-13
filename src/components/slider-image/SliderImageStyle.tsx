@@ -14,6 +14,16 @@ const SliderImageStyle = StyleSheet.create({
     height: HEIGHT * 0.4,
     alignSelf: 'center',
   },
+  prevButton: {
+    marginLeft: 10,
+    marginTop: HEIGHT * 0.33,
+    opacity: 0.5,
+  },
+  nextButton: {
+    marginRight: 10,
+    marginTop: HEIGHT * 0.33,
+    opacity: 0.5,
+  },
 });
 
 export default SliderImageStyle;
